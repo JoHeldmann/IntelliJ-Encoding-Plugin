@@ -1,0 +1,27 @@
+<idea-plugin version="2">
+    <name>Encoding</name>
+    <description>Plugin to encode and decode text.</description>
+    <version>1.0</version>
+    <vendor>Joachim Heldmann</vendor>
+    <idea-version since-build="8000"/>
+
+    <application-components>
+        <!-- Add your application components here -->
+    </application-components>
+
+    <project-components>
+        <!-- Add your project components here -->
+    </project-components>
+
+    <actions>
+        <group id="EncodingPlugin.Menu" text="Encode/Decode" description="Encode/Decode selected text" popup="true">
+            <add-to-group group-id="EditMenu" anchor="last"/>
+            <action id="EncodingPlugin.Encode" class="jo.intellij.plugin.encoding.EncodeAction" text="Encode" description="Encode selected text"/>
+            <action id="EncodingPlugin.Decode" class="jo.intellij.plugin.encoding.DecodeAction" text="Decode" description="Decode selected text"/>
+        </group>
+    </actions>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+    </extensions>
+</idea-plugin>
