@@ -1,32 +1,18 @@
 package jo.intellij.plugin.encoding;
 
-import com.intellij.openapi.actionSystem.AnActionEvent;
-import sun.misc.BASE64Decoder;
-
-import java.io.IOException;
+import jo.intellij.plugin.encoding.coder.Base64Decoder;
 
 public class DecodeAction extends AbstractEncodingPluginAction {
 
-    @Override
-    public void actionPerformed(AnActionEvent event) {
-        System.out.println("######### DecodeAction");
-        execute(event);
-    }
+    private final Base64Decoder decoderBase64 = new Base64Decoder();
 
     @Override
     protected String codeText(String text) {
-        BASE64Decoder decoder = new BASE64Decoder();
-        String result = null;
-        try {
-            result = new String(decoder.decodeBuffer(text), "UTF-8");
-        } catch (IOException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-        return result;
+        return decoderBase64.code(text);
     }
 
     @Override
-    protected String getActionName() {
-        return "Decode";
+    protected String getName() {
+        return "Decode Base64";
     }
 }

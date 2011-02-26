@@ -1,25 +1,21 @@
 package jo.intellij.plugin.encoding;
 
-import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.DataKeys;
-import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.command.CommandProcessor;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
-import com.intellij.openapi.project.Project;
+import jo.intellij.plugin.encoding.util.AbstractPluginAction;
+import jo.intellij.plugin.encoding.util.PluginUtils;
 
-public abstract class AbstractEncodingPluginAction extends AnAction {
+public abstract class AbstractEncodingPluginAction extends AbstractPluginAction {
 
     private Boolean hasSelection(AnActionEvent event) {
         boolean result = false;
         Editor editor = event.getData(DataKeys.EDITOR);
         if (editor != null) {
             SelectionModel selectionModel = editor.getSelectionModel();
-            if (selectionModel != null) {
-                result = selectionModel.hasSelection();
-            }
+            result = selectionModel.hasSelection();
         }
         return result;
     }
@@ -28,15 +24,16 @@ public abstract class AbstractEncodingPluginAction extends AnAction {
     public void update(AnActionEvent event) {
         super.update(event);
         if (hasSelection(event)) {
-            System.out.println("hasSelection = true");
+//            System.out.println("hasSelection = true");
             event.getPresentation().setEnabled(true);
         } else {
-            System.out.println("hasSelection = false");
+//            System.out.println("hasSelection = false");
             event.getPresentation().setEnabled(false);
         }
     }
 
-    protected void execute(final AnActionEvent event) {
+    @Override
+    public void actionPerformed(final AnActionEvent event) {
         final Editor editor = event.getData(DataKeys.EDITOR);
         if (editor != null) {
             // Selektierten Text holen
@@ -49,40 +46,19 @@ public abstract class AbstractEncodingPluginAction extends AnAction {
             // Text de-/encodieren
             final String newText = codeText(oldText);
 
-            final Project project = (Project) event.getData(DataKeys.PROJECT);
-
-
-            CommandProcessor.getInstance().executeCommand(
-                    project,
-                    new Runnable() {
-                        public void run() {
-                            try {
-                                ApplicationManager.getApplication().runWriteAction(
-                                        new Runnable() {
-                                            public void run() {
-                                                // Text ersetzen
-                                                Document document = editor.getDocument();
-                                                document.deleteString(selectionStart, selectionEnd);
-                                                document.insertString(selectionStart, newText);
-                                                // neuen Text selektieren
-                                                if (newText != null) {
-                                                    selectionModel.setSelection(selectionStart, selectionStart + newText.length());
-                                                }
-                                            }
-                                        }
-                                );
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    },
-                    getActionName(),
-                    "string-2"
-            );
+            PluginUtils.executeWriteAction(this, event, new Runnable() {
+                public void run() {
+                    // Text ersetzen
+                    Document document = editor.getDocument();
+                    document.deleteString(selectionStart, selectionEnd);
+                    document.insertString(selectionStart, newText);
+                    // neuen Text selektieren
+                    selectionModel.setSelection(selectionStart, selectionStart + newText.length());
+                }
+            });
         }
     }
 
     protected abstract String codeText(String text);
 
-    protected abstract String getActionName();
 }
