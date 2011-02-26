@@ -8,7 +8,13 @@ import com.intellij.openapi.editor.SelectionModel;
 import jo.intellij.plugin.encoding.util.AbstractPluginAction;
 import jo.intellij.plugin.encoding.util.PluginUtils;
 
+import javax.swing.*;
+
 public abstract class AbstractEncodingPluginAction extends AbstractPluginAction {
+
+    protected AbstractEncodingPluginAction(String name, String description, Icon icon) {
+        super(name, description, icon);
+    }
 
     private Boolean hasSelection(AnActionEvent event) {
         boolean result = false;

@@ -7,6 +7,9 @@
 
     <application-components>
         <!-- Add your application components here -->
+        <component>
+            <implementation-class>jo.intellij.plugin.encoding.PluginRegistration</implementation-class>
+        </component>
     </application-components>
 
     <project-components>
@@ -14,11 +17,11 @@
     </project-components>
 
     <actions>
-        <group id="EncodingPlugin.Menu" text="Encode/Decode" description="Encode/Decode selected text" popup="true">
-            <add-to-group group-id="EditMenu" anchor="last"/>
-            <action id="EncodingPlugin.Encode" class="jo.intellij.plugin.encoding.Base64EncodeAction" text="Encode" description="Encode selected text"/>
-            <action id="EncodingPlugin.Decode" class="jo.intellij.plugin.encoding.Base64DecodeAction" text="Decode" description="Decode selected text"/>
-        </group>
+        <!--<group id="EncodingPlugin.Menu" text="Encode/Decode" description="Encode/Decode selected text" popup="true">-->
+            <!--<add-to-group group-id="EditMenu" anchor="last"/>-->
+            <!--<action id="EncodingPlugin.Encode" class="jo.intellij.plugin.encoding.Base64EncodeAction" text="Encode" description="Encode selected text"/>-->
+            <!--<action id="EncodingPlugin.Decode" class="jo.intellij.plugin.encoding.Base64DecodeAction" text="Decode" description="Decode selected text"/>-->
+        <!--</group>-->
     </actions>
 
     <extensions defaultExtensionNs="com.intellij">
