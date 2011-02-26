@@ -2,7 +2,7 @@ package jo.intellij.plugin.encoding;
 
 import jo.intellij.plugin.encoding.coder.Base64Decoder;
 
-public class DecodeAction extends AbstractEncodingPluginAction {
+public class Base64DecodeAction extends AbstractEncodingPluginAction {
 
     private final Base64Decoder decoderBase64 = new Base64Decoder();
 
