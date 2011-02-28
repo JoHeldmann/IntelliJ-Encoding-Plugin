@@ -1,1 +1,3 @@
-This file was created by IntelliJ IDEA 10.0.2 for binding GitHub repository
+Encoding plugin for IntelliJ IDEA was created to encode and decode the selected text.
+
+Currently only Base64 coding is supported.
